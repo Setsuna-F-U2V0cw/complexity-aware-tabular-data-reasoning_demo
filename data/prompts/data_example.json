@@ -1,0 +1,142 @@
+[
+  {
+    "id": "stat_001",
+    "category": "Statistical_Analysis",
+    "question": "How many records are attributed to the 'Outfitting Dept.'?",
+    "ground_truth": "13",
+    "evidence_rows": ["5", "11", "23", "29", "35", "41", "47", "59", "65", "71", "77", "83", "95"]
+  },
+  {
+    "id": "stat_002",
+    "category": "Statistical_Analysis",
+    "question": "How many issues fall under the 'Welding' category?",
+    "ground_truth": "15",
+    "evidence_rows": ["3", "13", "15", "21", "22", "27", "32", "39", "49", "56", "58", "63", "79", "81", "97"]
+  },
+  {
+    "id": "stat_003",
+    "category": "Statistical_Analysis",
+    "question": "How many records list 'North Star Heavy Ind.' as the contractor?",
+    "ground_truth": "1",
+    "evidence_rows": ["2"]
+  },
+  {
+    "id": "stat_004",
+    "category": "Statistical_Analysis",
+    "question": "How many records from the 'Production Div.' are categorized as 'Cutting' issues?",
+    "ground_truth": "14",
+    "evidence_rows": ["1", "7", "12", "19", "30", "37", "42", "48", "55", "66", "73", "78", "84", "91"]
+  },
+  {
+    "id": "stat_005",
+    "category": "Statistical_Analysis",
+    "question": "How many records resulted in a financial assessment (containing the words 'Fine' or 'Penalty')?",
+    "ground_truth": "23",
+    "evidence_rows": ["2", "5", "9", "12", "14", "18", "22", "25", "27", "35", "37", "39", "48", "49", "52", "57", "58", "63", "71", "79", "81", "89", "97"]
+  },
+  {
+    "id": "stat_006",
+    "category": "Statistical_Analysis",
+    "question": "How many issues were reported in December 2024?",
+    "ground_truth": "8",
+    "evidence_rows": ["10", "21", "32", "43", "54", "65", "76", "87"]
+  },
+  {
+    "id": "stat_007",
+    "category": "Statistical_Analysis",
+    "question": "How many unique teams are listed under the 'Production Div.'?",
+    "ground_truth": "7",
+    "evidence_rows": ["1", "2", "3", "6", "9", "13", "60"]
+  },
+  {
+    "id": "stat_008",
+    "category": "Statistical_Analysis",
+    "question": "How many records mention 'porosity' in the Issue Description?",
+    "ground_truth": "3",
+    "evidence_rows": ["13", "27", "97"]
+  },
+  {
+    "id": "stat_009",
+    "category": "Statistical_Analysis",
+    "question": "How many records belong to the 'Coating Div.'?",
+    "ground_truth": "7",
+    "evidence_rows": ["10", "34", "53", "70", "76", 89, "94"]
+  },
+  {
+    "id": "stat_010",
+    "category": "Statistical_Analysis",
+    "question": "How many records are assigned to either 'Living Quarter Unit A' or 'Living Quarter Unit B'?",
+    "ground_truth": "13",
+    "evidence_rows": ["5", "11", "23", "29", "35", "41", "47", "59", "65", "71", "77", "83", "95"]
+  },
+  {
+    "id": "risk_001",
+    "category": "Risk_Logic",
+    "question": "Which Team within the 'Production Div.' recorded the highest number of issues in this dataset?",
+    "ground_truth": "Material Prep Unit",
+    "evidence_rows": ["1", "7", "12", "19", "25", "30", "37", "48", "55", "66", "73", "84", "91"]
+  },
+  {
+    "id": "risk_002",
+    "category": "Risk_Logic",
+    "question": "Which month in 2024 had the highest number of reported incidents?",
+    "ground_truth": "October",
+    "evidence_rows": ["8", "19", "30", "41", "52", "63", "74", "85", "96", "97"]
+  },
+  {
+    "id": "risk_003",
+    "category": "Risk_Logic",
+    "question": "Which Department is associated with the majority of the 'Welding' category issues?",
+    "ground_truth": "Production Div.",
+    "evidence_rows": ["3", "13", "21", "22", "27", "32", "39", "49", "56", "58", "63", "79", "81", "97"]
+  },
+  {
+    "id": "risk_004",
+    "category": "Risk_Logic",
+    "question": "In the 'Assembly Ops.' Department, which Unit has the highest number of recorded issues?",
+    "ground_truth": "Machinery Unit",
+    "evidence_rows": ["16", "28", "40", "46", "57", "64", "82"]
+  },
+  {
+    "id": "risk_005",
+    "category": "Risk_Logic",
+    "question": "How many records explicitly mention a 'crack' or 'cracks' in the Issue Description, indicating a potential structural failure risk?",
+    "ground_truth": "4",
+    "evidence_rows": ["15", "37", "49", "81"]
+  },
+  {
+    "id": "risk_006",
+    "category": "Risk_Logic",
+    "question": "Which 'Coating Unit' was responsible for the issue that resulted in a penalty (Fine/Penalty) rather than just Re-education?",
+    "ground_truth": "Coating Unit B",
+    "evidence_rows": ["89"]
+  },
+  {
+    "id": "risk_007",
+    "category": "Risk_Logic",
+    "question": "Identify the two Record IDs where the 'Leg Length' defect was specifically 'excessive' (measured value larger than design value).",
+    "ground_truth": "9, 69",
+    "evidence_rows": ["9", "69"]
+  },
+  {
+    "id": "risk_008",
+    "category": "Risk_Logic",
+    "question": "What is the most common corrective action category prescribed for 'Accuracy Control' issues? (Choose from: Flame straightening, Machining/Milling, or Adjusting/Re-drilling)",
+    "ground_truth": "Adjusting/Re-drilling",
+    "evidence_rows": ["8", "38", "46", "57", "64", "80", "82"]
+  },
+  {
+    "id": "risk_009",
+    "category": "Risk_Logic",
+    "question": "Did more issues occur in the first 10 days of the month (1st-10th) or the last 10 days of the month (22nd-31st)?",
+    "ground_truth": "Last 10 days",
+    "evidence_rows": ["3", "5", "8", "11", "15", "20", "23", "29", "35", "37", "41", "47", "49", "51", "53", "65", "67", "68", "70", "72", "73", "77", "80", "85", "86", "92"]
+  },
+  {
+    "id": "risk_010",
+    "category": "Risk_Logic",
+    "question": "How many 'Cutting' category issues resulted in a specific monetary fine of exactly -300 CNY?",
+    "ground_truth": "2",
+    "evidence_rows": ["12", "48"]
+  }
+]
