@@ -71,16 +71,30 @@ python run_experiment.py --mode proposed_method --num_runs 3
 
 ### Baseline Methods
 
-Available baselines: `single_llm`, `single_llm_cot`, `multi_agent_debate`, `plan_and_solve`.
+Available baselines: `single_llm`, `single_llm_cot`, `multi_agent_debate`, `plan_and_solve`, `single_llm_code`, `single_llm_code_debug`.
 
 ```bash
 python run_experiment.py --mode baseline --method multi_agent_debate
+```
+
+Single coding agent baselines generate Python code directly. Use `single_llm_code_debug` to enable the debug loop:
+
+```bash
+python run_experiment.py --mode baseline --method single_llm_code
+python run_experiment.py --mode baseline --method single_llm_code_debug --max_debug_attempts 3
 ```
 
 With multiple repeated runs (results saved to `results/baseline/{method}-{run_number}/`):
 
 ```bash
 python run_experiment.py --mode baseline --method single_llm_cot --num_runs 3
+```
+
+Thinking mode is disabled by default. Add `--enable_thinking` to enable it for the proposed method and all `gpt_chat`-based baselines:
+
+```bash
+python run_experiment.py --mode proposed_method --enable_thinking
+python run_experiment.py --mode baseline --method single_llm_code_debug --enable_thinking
 ```
 
 ## Evaluation

@@ -53,9 +53,11 @@ class ExcelCodeAgent:
         debugging_model: str = None,
         temperature: float = None,
         timeout: int = None,
+        enable_thinking: bool = False,
     ) -> None:
         self.k = k
         self.t = t
+        self.enable_thinking = enable_thinking
         
         # Load model configs
         self.model_configs = config.MODEL_CONFIG
@@ -145,8 +147,8 @@ class ExcelCodeAgent:
                     timeout=self.timeout,
                     max_tokens=None,  # Explicit max output tokens to avoid premature truncation or unbounded generation
                     extra_body={
-                        "enable_thinking": False, # API
-                    #    "chat_template_kwargs": {"enable_thinking": True}, # VLLM
+                        "enable_thinking": self.enable_thinking, # API
+                    #    "chat_template_kwargs": {"enable_thinking": self.enable_thinking}, # VLLM
                     }
                 )
 

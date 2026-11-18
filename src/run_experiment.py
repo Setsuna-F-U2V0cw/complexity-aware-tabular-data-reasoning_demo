@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 import pandas as pd
 
 from baselines import BaselineAgent
+from baselines_single_code import SingleCodeAgent
 from excel_agent import ExcelCodeAgent, config
 
 DEFAULT_DATASETS = [
@@ -18,7 +19,14 @@ BASELINE_METHODS = [
     "single_llm_cot",
     "multi_agent_debate",
     "plan_and_solve",
+    "single_llm_code",
+    "single_llm_code_debug",
 ]
+
+SINGLE_CODE_METHODS = {
+    "single_llm_code",
+    "single_llm_code_debug",
+}
 
 
 def _project_root() -> str:
@@ -64,7 +72,7 @@ def _save_run_result(results_root_dir: str, question_id: str, final_code, stats,
         json.dump(stats, f, ensure_ascii=False, indent=2)
 
 
-def run_proposed_method(dataset_id: str, run_number=None):
+def run_proposed_method(dataset_id: str, run_number=None, enable_thinking: bool = False):
     project_root, df, test_cases, dataset_name = _load_dataset(dataset_id)
     if df is None:
         return
@@ -85,7 +93,7 @@ def run_proposed_method(dataset_id: str, run_number=None):
     print(f"Results will be saved to: {results_root_dir}")
     print(f"{'#' * 60}\n")
 
-    agent = ExcelCodeAgent()
+    agent = ExcelCodeAgent(enable_thinking=enable_thinking)
 
     for i, item in enumerate(test_cases):
         user_query = item.get("question", "").strip()
@@ -114,7 +122,13 @@ def run_proposed_method(dataset_id: str, run_number=None):
         print("==============================================\n")
 
 
-def run_baseline(dataset_id: str, method: str, run_number=None):
+def run_baseline(
+    dataset_id: str,
+    method: str,
+    run_number=None,
+    max_debug_attempts: int = 3,
+    enable_thinking: bool = False,
+):
     project_root, df, test_cases, _ = _load_dataset(dataset_id)
     if df is None:
         return
@@ -134,7 +148,14 @@ def run_baseline(dataset_id: str, method: str, run_number=None):
     print(f"Results will be saved to: {results_root_dir}")
     print(f"{'#' * 60}\n")
 
-    agent = BaselineAgent(method=method)
+    if method in SINGLE_CODE_METHODS:
+        agent = SingleCodeAgent(
+            method=method,
+            max_debug_attempts=max_debug_attempts,
+            enable_thinking=enable_thinking,
+        )
+    else:
+        agent = BaselineAgent(method=method, enable_thinking=enable_thinking)
 
     for i, item in enumerate(test_cases):
         user_query = item.get("question", "").strip()
@@ -173,6 +194,17 @@ def main():
         default=2,
         help="Maximum concurrent datasets per run (default: 2)",
     )
+    parser.add_argument(
+        "--max_debug_attempts",
+        type=int,
+        default=3,
+        help="Maximum debug attempts for single_llm_code_debug (default: 3)",
+    )
+    parser.add_argument(
+        "--enable_thinking",
+        action="store_true",
+        help="Enable thinking mode for all gpt_chat-based agents (default: disabled)",
+    )
     args = parser.parse_args()
 
     if args.mode == "baseline" and not args.method:
@@ -194,12 +226,24 @@ def main():
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             if args.mode == "proposed_method":
                 futures = {
-                    executor.submit(run_proposed_method, dataset_id, run_number=run_num): dataset_id
+                    executor.submit(
+                        run_proposed_method,
+                        dataset_id,
+                        run_number=run_num,
+                        enable_thinking=args.enable_thinking,
+                    ): dataset_id
                     for dataset_id in datasets
                 }
             else:
                 futures = {
-                    executor.submit(run_baseline, dataset_id, args.method, run_number=run_num): dataset_id
+                    executor.submit(
+                        run_baseline,
+                        dataset_id,
+                        args.method,
+                        run_number=run_num,
+                        max_debug_attempts=args.max_debug_attempts,
+                        enable_thinking=args.enable_thinking,
+                    ): dataset_id
                     for dataset_id in datasets
                 }
 

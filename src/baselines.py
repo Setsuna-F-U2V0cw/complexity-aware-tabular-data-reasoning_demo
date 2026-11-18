@@ -13,8 +13,9 @@ except ImportError:
 
 
 class BaselineAgent:
-    def __init__(self, method: str, model_name: str = None):
+    def __init__(self, method: str, model_name: str = None, enable_thinking: bool = False):
         self.method = method
+        self.enable_thinking = enable_thinking
 
         self.model_configs = {
             "retrieval": config.MODEL_CONFIG["retrieval"].copy(),
@@ -72,7 +73,7 @@ class BaselineAgent:
                     timeout=self.timeout,
                     max_tokens=None,
                     extra_body={
-                        "chat_template_kwargs": {"enable_thinking": False},
+                        "chat_template_kwargs": {"enable_thinking": self.enable_thinking},
                     },
                 )
 
